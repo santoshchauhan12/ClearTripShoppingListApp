@@ -1,18 +1,21 @@
+import org.jetbrains.kotlin.config.JvmAnalysisFlags.useIR
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-android")
-    id ("kotlin-android-extensions")
+    id ("kotlin-kapt")
+
 }
 
 
 
 android {
-    namespace = "com.android.shoppinglist"
+    namespace = "com.android.cryptocoin"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.android.shoppinglist"
+        applicationId = "com.android.cryptocoin"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
@@ -31,12 +34,28 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
+    buildFeatures {
+        dataBinding =  true
+        viewBinding = true
+    }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+
+//    kapt {
+//        useBuildCache = true // if desired
+//        correctErrorTypes = true // if desired
+//
+//        javacOptions {
+//            option("-target", "1.8")
+//            option("-source", "1.8")
+//        }
+//    }
 }
 
 dependencies {
@@ -50,9 +69,29 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    implementation("com.squareup.moshi:moshi-adapters:1.12.0")
+
+    implementation("io.insert-koin:koin-android:3.2.2")
+
+
     annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
 
-
+    // lifecycle
+    kapt("androidx.lifecycle:lifecycle-compiler:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
+    implementation("androidx.databinding:databinding-runtime:7.0.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
